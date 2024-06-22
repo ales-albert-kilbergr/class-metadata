@@ -1,6 +1,16 @@
 {
-  "name": "@kilbergr/class-metadata",
+  "name": "@kilbergr/metadata",
   "description": "Class metadata helper",
+  "version": "0.1.0-Alpha.3",
+  "author": {
+    "name": "Kilbergr",
+    "email": "ales.albert@kilbergr.eu"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ales-albert-kilbergr/metadata"
+  },
   "main": "dist/cjs/index.cjs",
   "module": "dist/esm/index.mjs",
   "types": "dist/index.d.ts",
@@ -17,7 +27,9 @@
     "build:types": "tsc -p tsconfig.types.json",
     "build:esm": "tsc -p tsconfig.esm.json",
     "build:cjs": "tsc -p tsconfig.cjs.json",
-    "build": "rm -rf ./dist && npm run build:types && npm run build:cjs && npm run build:esm"
+    "build": "rm -rf ./dist && npm run build:types && npm run build:cjs && npm run build:esm",
+    "prepublish": "npm run test && npm run build",
+    "publish": "npm publish --access public"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",

@@ -34,6 +34,43 @@ describe('(Unit) Metadata', () => {
       // Assert
       expect(testMetadata1.metadataKey).not.toBe(testMetadata2.metadataKey);
     });
+
+    it('should use the metadata in a class decorator', () => {
+      // Arrange
+      const myMetadata = new Metadata<string>('test:myMetadata');
+      const MyDecorator = (value: string): ClassDecorator => {
+        return (target) => {
+          myMetadata.set(target, value);
+        };
+      };
+      // Act
+      @MyDecorator('testValue')
+      class TestClass {}
+
+      const metadata = myMetadata.get(TestClass);
+      // Assert
+      expect(metadata).toBe('testValue');
+    });
+
+    it('should use the metadata in a property decorator', () => {
+      // Arrange
+      const myPropMetadata = new Metadata<string>('test:myPropMetadata');
+      const MyDecorator = (value: string): PropertyDecorator => {
+        return (target) => {
+          myPropMetadata.set(target, value);
+        };
+      };
+
+      class TestClass {
+        @MyDecorator('testValue')
+        testProp?: string;
+      }
+
+      // Act
+      const metadata = myPropMetadata.get(TestClass);
+      // Assert
+      expect(metadata).toBe('testValue');
+    });
   });
   describe('#set() - value setting', () => {
     it('should set a metadata on a class', () => {

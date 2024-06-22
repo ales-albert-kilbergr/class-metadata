@@ -25,6 +25,65 @@ describe('(Unit) SetMetadata', () => {
       // Assert
       expect(typeof testMetadata.metadataKey).toBe('symbol');
     });
+
+    it('should be usable in list of disposable methods', () => {
+      // Arrange
+      const disposableMethods = new SetMetadata<Function>('disposableMethods');
+      function Disposable(target: any, propertyKey: string) {
+        disposableMethods.add(target.constructor, target[propertyKey]);
+      }
+      class TestClass {
+        @Disposable
+        public disposeOne() {}
+
+        @Disposable
+        public disposeTwo() {}
+
+        public dispose() {
+          const methods = disposableMethods.getSet(this);
+          methods.forEach((method) => method());
+          // For testing purposes
+          return methods.size;
+        }
+      }
+      // Act
+      const testInstance = new TestClass();
+      const disposedMethods = testInstance.dispose();
+      // Assert
+      expect(disposedMethods).toBe(2);
+    });
+
+    it('should be usable in list of disposable methods with inheritance', () => {
+      // Arrange
+      const disposableMethods = new SetMetadata<Function>('disposableMethods');
+      function Disposable(target: any, propertyKey: string) {
+        disposableMethods.add(target.constructor, target[propertyKey]);
+      }
+      class ParentClass {
+        @Disposable
+        public disposeOne() {}
+      }
+      class ChildClass extends ParentClass {
+        @Disposable
+        public disposeTwo() {}
+      }
+      class GrandChildClass extends ChildClass {
+        @Disposable
+        public disposeThree() {}
+
+        public dispose() {
+          const methods = disposableMethods.getSet(this);
+          methods.forEach((method) => method());
+          // For testing purposes
+          return methods.size;
+        }
+      }
+      // Act
+      const testInstance = new GrandChildClass();
+      const disposedMethods = testInstance.dispose();
+      // Assert
+      expect(disposedMethods).toBe(3);
+    });
   });
 
   describe('#init() - metadata initialization', () => {
