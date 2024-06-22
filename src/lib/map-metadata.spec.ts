@@ -27,6 +27,26 @@ describe('(Unit) MapMetadata', () => {
       // Assert
       expect(typeof testMetadata.metadataKey).toBe('symbol');
     });
+
+    it('should be usable in a property decorator', () => {
+      // Arrange
+      const myMetadata = new MapMetadata<string | symbol, unknown>(
+        'test:testMetadata',
+      );
+      const MyPropertyDecorator =
+        (value: string): PropertyDecorator =>
+        (target: object, propertyKey: string | symbol): void => {
+          myMetadata.set(target, propertyKey, value);
+        };
+      class TestClass {
+        @MyPropertyDecorator('testValue')
+        public testProperty?: string;
+      }
+      // Act
+      const propertyMetadata = myMetadata.get(TestClass, 'testProperty');
+      // Assert
+      expect(propertyMetadata).toBe('testValue');
+    });
   });
 
   describe('#init() - metadata initialization', () => {
