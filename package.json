@@ -1,7 +1,7 @@
 {
   "name": "@kilbergr/metadata",
   "description": "Class metadata helper",
-  "version": "0.1.0-Alpha.3",
+  "version": "0.1.0-Alpha.5",
   "author": {
     "name": "Kilbergr",
     "email": "ales.albert@kilbergr.eu"
@@ -9,7 +9,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ales-albert-kilbergr/metadata"
+    "url": "git+https://github.com/ales-albert-kilbergr/metadata.git"
   },
   "main": "dist/cjs/index.cjs",
   "module": "dist/esm/index.mjs",
@@ -44,9 +44,7 @@
     "ts-jest": "^29.1.5",
     "ts-node": "^10.9.2",
     "tslib": "^2.6.3",
+    "type-fest": "^4.20.1",
     "typescript": "^5.5.2"
-  },
-  "peerDependencies": {
-    "type-fest": "^4.20.1"
   }
 }

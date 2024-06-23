@@ -1,3 +1,9 @@
+import { Constructor } from 'type-fest';
+/**
+ * A metadata helper to store a set of values on a class or an instance constructor.
+ *
+ * @template V - Metadata value type.
+ */
 export class SetMetadata<V> {
   /**
    * Unique symbol used to store metadata on a class.
@@ -19,14 +25,11 @@ export class SetMetadata<V> {
    * set. This way, modifying the parent set will not affect the new set.
    * Later modification of the parent set will not affect the new set.
    *
-   * @param ctor - Class constructor or an instance of a class.
+   * @param arg - Class constructor or an instance of a class.
    * @returns Metadata set.
+   * @template T - Class instance type.
    */
-  public init<TInstance extends object>(ctor: TInstance): Set<V>;
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  public init<TFunction extends Function>(ctor: TFunction): Set<V>;
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  public init<ARG extends Function | object>(arg: ARG): Set<V> {
+  public init<T extends object>(arg: T | Constructor<T>): Set<V> {
     const ctor = arg instanceof Function ? arg : arg.constructor;
     const metadata = new Set<V>();
     // There are metadata already defined somewhere on the prototype chain.
@@ -46,12 +49,18 @@ export class SetMetadata<V> {
 
     return metadata;
   }
-
-  public getSet<TInstance extends object>(instance: TInstance): Set<V>;
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  public getSet<TFunction extends Function>(ctor: TFunction): Set<V>;
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  public getSet<ARG extends Function | object>(arg: ARG): Set<V> {
+  /**
+   * Return the metadata set from a class or an instance constructor.
+   *
+   * If the metadata set is not defined, it will be initialized. If the metadata
+   * set is already defined on a parent class, it will be copied to the new set.
+   * Later modification of the parent set will not affect the new set.
+   *
+   * @param arg - Class constructor or an instance of a class.
+   * @returns Metadata set.
+   * @template T - Class instance type.
+   */
+  public getSet<T extends object>(arg: T | Constructor<T>): Set<V> {
     const ctor = arg instanceof Function ? arg : arg.constructor;
     const metadata = Object.prototype.hasOwnProperty.call(
       ctor,
@@ -62,91 +71,80 @@ export class SetMetadata<V> {
 
     return metadata;
   }
-
-  public add<TInstance extends object>(instance: TInstance, value: V): void;
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  public add<TFunction extends Function>(ctor: TFunction, value: V): void;
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  public add<ARG extends Function | object>(arg: ARG, value: V): void {
+  /**
+   * Add a new value to the metadata set on a class or an instance constructor.
+   *
+   * If the metadata set is not defined, it will be initialized. If the metadata
+   * set is already defined on a parent class, it will be copied to the new set.
+   * Later modification of the parent set will not affect the new set.
+   *
+   * @param arg - Class constructor or an instance of a class.
+   * @param value - Metadata value to store.
+   * @template T - Class instance type.
+   */
+  public add<T extends object>(arg: T | Constructor<T>, value: V): void {
     const metadata = this.getSet(arg);
     metadata.add(value);
   }
-
-  public has<TInstance extends object>(instance: TInstance, value: V): boolean;
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  public has<TFunction extends Function>(ctor: TFunction, value: V): boolean;
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  public has<ARG extends Function | object>(arg: ARG, value: V): boolean {
+  /**
+   * Check if the metadata is set on a class or an instance constructor.
+   *
+   * If the metadata set is not defined, it will be initialized. If the metadata
+   * set is already defined on a parent class, it will be copied to the new set.
+   * Later modification of the parent set will not affect the new set.
+   *
+   * @param arg - Class constructor or an instance of a class.
+   * @param value - Metadata value to check.
+   * @returns `true` if the metadata is set, `false` otherwise.
+   * @template T - Class instance type.
+   */
+  public has<T extends object>(arg: T | Constructor<T>, value: V): boolean {
     const metadata = this.getSet(arg);
     return metadata.has(value);
   }
-
-  public delete<TInstance extends object>(
-    instance: TInstance,
-    value: V,
-  ): boolean;
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  public delete<TFunction extends Function>(ctor: TFunction, value: V): boolean;
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  public delete<ARG extends Function | object>(arg: ARG, value: V): boolean {
+  /**
+   * Delete the metadata value from the set on a class or an instance constructor.
+   *
+   * If the metadata set is not defined, it will be initialized. If the metadata
+   * set is already defined on a parent class, it will be copied to the new set.
+   * Later modification of the parent set will not affect the new set.
+   *
+   * @param instance - Class instance or an instance of a class.
+   * @param value - Metadata value to delete.
+   * @returns `true` if the metadata was deleted, `false` otherwise.
+   * @template T - Class instance type.
+   */
+  public delete<T extends object>(arg: T | Constructor<T>, value: V): boolean {
     const metadata = this.getSet(arg);
     return metadata.delete(value);
   }
-
-  public clear<TInstance extends object>(instance: TInstance): void;
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  public clear<TFunction extends Function>(ctor: TFunction): void;
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  public clear<ARG extends Function | object>(arg: ARG): void {
+  /**
+   * Clear the metadata set on a class or an instance constructor.
+   *
+   * If the metadata set is not defined, it will be initialized. If the metadata
+   * set is already defined on a parent class, it will be copied to the new set.
+   * Later modification of the parent set will not affect the new set.
+   *
+   * @param arg - Class constructor or an instance of a class.
+   * @template T - Class instance type.
+   */
+  public clear<T extends object>(arg: T | Constructor<T>): void {
     const metadata = this.getSet(arg);
     metadata.clear();
   }
-
-  public keys<TInstance extends object>(
-    instance: TInstance,
-  ): IterableIterator<V>;
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  public keys<TFunction extends Function>(ctor: TFunction): IterableIterator<V>;
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  public keys<ARG extends Function | object>(arg: ARG): IterableIterator<V> {
-    const metadata = this.getSet(arg);
-    return metadata.keys();
-  }
-
-  public values<TInstance extends object>(
-    instance: TInstance,
-  ): IterableIterator<V>;
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  public values<TFunction extends Function>(
-    ctor: TFunction,
-  ): IterableIterator<V>;
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  public values<ARG extends Function | object>(arg: ARG): IterableIterator<V> {
-    const metadata = this.getSet(arg);
-    return metadata.values();
-  }
-
-  public getSize<TInstance extends object>(instance: TInstance): number;
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  public getSize<TFunction extends Function>(ctor: TFunction): number;
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  public getSize<ARG extends Function | object>(arg: ARG): number {
+  /**
+   * Get the size of the metadata set on a class or an instance constructor.
+   *
+   * If the metadata set is not defined, it will be initialized. If the metadata
+   * set is already defined on a parent class, it will be copied to the new set.
+   * Later modification of the parent set will not affect the new set.
+   *
+   * @param arg - Class constructor or an instance of a class.
+   * @returns Size of the metadata set.
+   * @template T - Class instance type.
+   */
+  public getSize<T extends object>(arg: T | Constructor<T>): number {
     const metadata = this.getSet(arg);
     return metadata.size;
-  }
-
-  public entries<TInstance extends object>(
-    instance: TInstance,
-  ): IterableIterator<[V, V]>;
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  public entries<TFunction extends Function>(
-    ctor: TFunction,
-  ): IterableIterator<[V, V]>;
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  public entries<ARG extends Function | object>(
-    arg: ARG,
-  ): IterableIterator<[V, V]> {
-    const metadata = this.getSet(arg);
-    return metadata.entries();
   }
 }

@@ -1,3 +1,5 @@
+import { Constructor } from 'type-fest';
+
 /**
  * Define a simple metadata value on a class. The metadata are stored under
  * unique symbol on the class itself. In case of an instance, the metadata are
@@ -5,6 +7,7 @@
  *
  * The metadata key can be passed as string or a known symbol.
  *
+ * @template V - Metadata value type.
  * @example
  *
  * ```ts
@@ -30,69 +33,30 @@ export class Metadata<V> {
     this.metadataKey = typeof key === 'symbol' ? key : Symbol(key);
   }
   /**
-   * Get the metadata value from an instance.
-   *
-   * @param instance - Instance of a class. The method will look for the
-   *   metadata on the instance's constructor or any parent class.
-   * @returns Metadata value or `undefined` if no metadata is set.
-   */
-  public get<TInstance extends object>(instance: TInstance): V | undefined;
-  /**
-   * Get the metadata value from a class.
-   *
-   * @param ctor - Class constructor. The method will look for the metadata
-   *  on the class itself or any parent class.
-   * @returns Metadata value or `undefined` if no metadata is set.
-   *
-   */
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  public get<TFunction extends Function>(ctor: TFunction): V | undefined;
-  /**
    * Get the metadata value from a class or an instance.
    *
-   * @param arg - Class constructor or an instance of a class. The method will
-   *  look for the metadata on the class itself or any parent class.
+   * @param arg - Class constructor or an instance of a class. The method
+   *  will look for the metadata on the class itself or any parent class.
    * @returns Metadata value or `undefined` if no metadata is set.
+   * @template T - Class instance type.
    */
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  public get<ARG extends Function | object>(arg: ARG): V | undefined {
-    if (arg instanceof Function) {
-      return Reflect.get(arg, this.metadataKey) as V | undefined;
-    } else {
-      return Reflect.get(arg.constructor, this.metadataKey) as V | undefined;
-    }
+  public get<T extends object>(arg: T | Constructor<T>): V | undefined {
+    const ctor = arg instanceof Function ? arg : arg.constructor;
+
+    return Reflect.get(ctor, this.metadataKey);
   }
-  /**
-   * Set the metadata value on an instance.
-   *
-   * @param instance - Instance of a class. The metadata will be stored on the
-   *   instance's constructor.
-   * @param value - Metadata value to store.
-   */
-  public set<TInstance extends object, V>(instance: TInstance, value: V): void;
-  /**
-   * Set the metadata value on a class.
-   *
-   * @param ctor - Class constructor. The metadata will be stored on the class
-   *  itself.
-   * @param value - Metadata value to store.
-   */
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  public set<TFunction extends Function, V>(ctor: TFunction, value: V): void;
   /**
    * Set the metadata value on a class or an instance.
    *
    * @param arg - Class constructor or an instance of a class. The metadata will
    *   be stored on the class itself or the instance's constructor.
    * @param value - Metadata value to store.
+   * @template T - Class instance type.
    */
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  public set<ARG extends Function | object, V>(arg: ARG, value: V): void {
-    if (arg instanceof Function) {
-      Reflect.set(arg, this.metadataKey, value);
-    } else {
-      Reflect.set(arg.constructor, this.metadataKey, value);
-    }
+  public set<T extends object, V>(arg: T | Constructor<T>, value: V): void {
+    const ctor = arg instanceof Function ? arg : arg.constructor;
+
+    Reflect.set(ctor, this.metadataKey, value);
   }
   /**
    * Check if the metadata is set on an instance.
@@ -117,41 +81,22 @@ export class Metadata<V> {
    * @param arg - Class constructor or an instance of a class. The method
    *  will look for the metadata on the class itself or any parent class.
    * @returns `true` if the metadata is set, `false` otherwise.
+   * @template T - Class instance type.
    */
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  public has<ARG extends Function | object>(arg: ARG): boolean {
-    if (arg instanceof Function) {
-      return Reflect.has(arg, this.metadataKey);
-    } else {
-      return Reflect.has(arg.constructor, this.metadataKey);
-    }
+  public has<T extends object>(arg: T | Constructor<T>): boolean {
+    const ctor = arg instanceof Function ? arg : arg.constructor;
+
+    return Reflect.has(ctor, this.metadataKey);
   }
-  /**
-   * Delete the metadata from an instance.
-   *
-   * @param instance - Instance of a class. The method will look for the
-   *  metadata on the instance's constructor or any parent class.
-   * @returns `true` if the metadata was deleted, `false` otherwise.
-   */
-  public delete<TInstance extends object>(instance: TInstance): boolean;
-  /**
-   * Delete the metadata from a class.
-   *
-   * @param ctor - Class constructor. The method will look for the metadata
-   *   on the class itself or any parent class.
-   * @returns `true` if the metadata was deleted, `false` otherwise.
-   */
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  public delete<TFunction extends Function>(ctor: TFunction): boolean;
   /**
    * Delete the metadata from a class or an instance.
    *
    * @param arg - Class constructor or an instance of a class. The method
    *  will look for the metadata on the class itself or any parent class.
    * @returns `true` if the metadata was deleted, `false` otherwise.
+   * @template T - Class instance type.
    */
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  public delete<ARG extends Function | object>(arg: ARG): boolean {
+  public delete<T extends object>(arg: T | Constructor<T>): boolean {
     if (arg instanceof Function) {
       if (!Reflect.has(arg, this.metadataKey)) {
         return false;
