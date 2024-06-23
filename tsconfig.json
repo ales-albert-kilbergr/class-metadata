@@ -9,6 +9,7 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "noLib": false,
     "esModuleInterop": true,
     "noImplicitAny": true,
     "forceConsistentCasingInFileNames": true,

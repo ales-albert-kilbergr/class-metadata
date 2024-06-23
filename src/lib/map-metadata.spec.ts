@@ -393,4 +393,50 @@ describe('(Unit) MapMetadata', () => {
       expect(parentMetadata).toBe('testValue');
     });
   });
+
+  describe('#getSize() - metadata size', () => {
+    it('should return 0 if no metadata is set on a class', () => {
+      // Arrange
+      const testMetadata = new MapMetadata<string, string>('test:testMetadata');
+      class TestClass {}
+      // Act
+      const size = testMetadata.getSize(TestClass);
+      // Assert
+      expect(size).toBe(0);
+    });
+
+    it('should return 0 if no metadata is set on an instance', () => {
+      // Arrange
+      const testMetadata = new MapMetadata<string, string>('test:testMetadata');
+      class TestClass {}
+      const testInstance = new TestClass();
+      // Act
+      const size = testMetadata.getSize(testInstance);
+      // Assert
+      expect(size).toBe(0);
+    });
+
+    it('should return metadata size on a class', () => {
+      // Arrange
+      const testMetadata = new MapMetadata<string, string>('test:testMetadata');
+      class TestClass {}
+      // Act
+      testMetadata.set(TestClass, 'key', 'testValue');
+      const size = testMetadata.getSize(TestClass);
+      // Assert
+      expect(size).toBe(1);
+    });
+
+    it('should return metadata size on an instance', () => {
+      // Arrange
+      const testMetadata = new MapMetadata<string, string>('test:testMetadata');
+      class TestClass {}
+      const testInstance = new TestClass();
+      // Act
+      testMetadata.set(testInstance, 'key', 'testValue');
+      const size = testMetadata.getSize(testInstance);
+      // Assert
+      expect(size).toBe(1);
+    });
+  });
 });
