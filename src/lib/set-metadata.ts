@@ -23,7 +23,9 @@ export class SetMetadata<V> {
    * @returns Metadata set.
    */
   public init<TInstance extends object>(ctor: TInstance): Set<V>;
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public init<TFunction extends Function>(ctor: TFunction): Set<V>;
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public init<ARG extends Function | object>(arg: ARG): Set<V> {
     const ctor = arg instanceof Function ? arg : arg.constructor;
     const metadata = new Set<V>();
@@ -46,7 +48,9 @@ export class SetMetadata<V> {
   }
 
   public getSet<TInstance extends object>(instance: TInstance): Set<V>;
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public getSet<TFunction extends Function>(ctor: TFunction): Set<V>;
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public getSet<ARG extends Function | object>(arg: ARG): Set<V> {
     const ctor = arg instanceof Function ? arg : arg.constructor;
     const metadata = Object.prototype.hasOwnProperty.call(
@@ -60,14 +64,18 @@ export class SetMetadata<V> {
   }
 
   public add<TInstance extends object>(instance: TInstance, value: V): void;
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public add<TFunction extends Function>(ctor: TFunction, value: V): void;
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public add<ARG extends Function | object>(arg: ARG, value: V): void {
     const metadata = this.getSet(arg);
     metadata.add(value);
   }
 
   public has<TInstance extends object>(instance: TInstance, value: V): boolean;
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public has<TFunction extends Function>(ctor: TFunction, value: V): boolean;
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public has<ARG extends Function | object>(arg: ARG, value: V): boolean {
     const metadata = this.getSet(arg);
     return metadata.has(value);
@@ -77,14 +85,18 @@ export class SetMetadata<V> {
     instance: TInstance,
     value: V,
   ): boolean;
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public delete<TFunction extends Function>(ctor: TFunction, value: V): boolean;
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public delete<ARG extends Function | object>(arg: ARG, value: V): boolean {
     const metadata = this.getSet(arg);
     return metadata.delete(value);
   }
 
   public clear<TInstance extends object>(instance: TInstance): void;
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public clear<TFunction extends Function>(ctor: TFunction): void;
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public clear<ARG extends Function | object>(arg: ARG): void {
     const metadata = this.getSet(arg);
     metadata.clear();
@@ -93,7 +105,9 @@ export class SetMetadata<V> {
   public keys<TInstance extends object>(
     instance: TInstance,
   ): IterableIterator<V>;
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public keys<TFunction extends Function>(ctor: TFunction): IterableIterator<V>;
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public keys<ARG extends Function | object>(arg: ARG): IterableIterator<V> {
     const metadata = this.getSet(arg);
     return metadata.keys();
@@ -102,16 +116,20 @@ export class SetMetadata<V> {
   public values<TInstance extends object>(
     instance: TInstance,
   ): IterableIterator<V>;
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public values<TFunction extends Function>(
     ctor: TFunction,
   ): IterableIterator<V>;
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public values<ARG extends Function | object>(arg: ARG): IterableIterator<V> {
     const metadata = this.getSet(arg);
     return metadata.values();
   }
 
   public getSize<TInstance extends object>(instance: TInstance): number;
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public getSize<TFunction extends Function>(ctor: TFunction): number;
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public getSize<ARG extends Function | object>(arg: ARG): number {
     const metadata = this.getSet(arg);
     return metadata.size;
@@ -120,9 +138,11 @@ export class SetMetadata<V> {
   public entries<TInstance extends object>(
     instance: TInstance,
   ): IterableIterator<[V, V]>;
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public entries<TFunction extends Function>(
     ctor: TFunction,
   ): IterableIterator<[V, V]>;
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public entries<ARG extends Function | object>(
     arg: ARG,
   ): IterableIterator<[V, V]> {

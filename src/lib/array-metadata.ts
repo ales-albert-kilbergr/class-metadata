@@ -44,6 +44,7 @@ export class ArrayMetadata<V> {
    *  on the class itself or any parent class.
    * @returns Initialized metadata array.
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public init<TFunction extends Function>(ctor: TFunction): V[];
   /**
    * Initialize an empty metadata array on a class or an instance.
@@ -52,6 +53,7 @@ export class ArrayMetadata<V> {
    *  will look for the metadata on the class itself or any parent class.
    * @returns Initialized metadata array.
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public init<ARG extends Function | object>(arg: ARG): V[] {
     const ctor = arg instanceof Function ? arg : arg.constructor;
     const metadata: V[] = [];
@@ -91,6 +93,7 @@ export class ArrayMetadata<V> {
    *  on the class itself or any parent class.
    * @returns Metadata array.
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public get<TFunction extends Function>(ctor: TFunction): V[];
   /**
    * Get the metadata array from a class or an instance. If no metadata is set,
@@ -101,6 +104,7 @@ export class ArrayMetadata<V> {
    *  will look for the metadata on the class itself or any parent class.
    * @returns Metadata array.
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public get<ARG extends Function | object>(arg: ARG): V[] {
     const ctor = arg instanceof Function ? arg : arg.constructor;
     // Persist the empty array for future access. (It could happened that
@@ -132,6 +136,7 @@ export class ArrayMetadata<V> {
    *  itself.
    * @param value - Metadata array to store.
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public set<TFunction extends Function>(ctor: TFunction, value: V[]): void;
   /**
    * Set a new metadata array on a class or an instance. If the metadata array
@@ -141,6 +146,7 @@ export class ArrayMetadata<V> {
    *   be stored on the class itself or the instance's constructor.
    * @param value - Metadata array to store.
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public set<ARG extends Function | object>(arg: ARG, value: V[]): void {
     const ctor = arg instanceof Function ? arg : arg.constructor;
 
@@ -172,6 +178,7 @@ export class ArrayMetadata<V> {
    *  itself.
    * @param value - Metadata value to add.
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public add<TFunction extends Function>(ctor: TFunction, ...value: V[]): void;
   /**
    * Add a new value to the metadata array on a class or an instance. If the
@@ -185,6 +192,7 @@ export class ArrayMetadata<V> {
    *  be stored on the class itself or the instance's constructor.
    * @param value - Metadata value to add.
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public add<ARG extends Function | object>(arg: ARG, ...values: V[]): void {
     const ctor = arg instanceof Function ? arg : arg.constructor;
     const metadata = this.get(ctor);
@@ -206,6 +214,7 @@ export class ArrayMetadata<V> {
    * @param ctor - Class constructor to get the metadata from.
    * @returns Size of the metadata array.
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public getSize<TFunction extends Function>(ctor: TFunction): number;
   /**
    * Get the size of the metadata array from a class or an instance.
@@ -214,6 +223,7 @@ export class ArrayMetadata<V> {
    *  will look for the metadata on the class itself or any parent class.
    * @returns Size of the metadata array.
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public getSize<ARG extends Function | object>(arg: ARG): number {
     return this.get(arg).length;
   }
@@ -236,6 +246,7 @@ export class ArrayMetadata<V> {
    * @param ctor - Class constructor. The metadata will be stored on the class
    *  itself.
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public clear<TFunction extends Function>(ctor: TFunction): void;
   /**
    * Clear the metadata array on a class or an instance. If the metadata array
@@ -247,6 +258,7 @@ export class ArrayMetadata<V> {
    * @param arg - Class constructor or an instance of a class. The metadata will
    *  be stored on the class itself or the instance's constructor.
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public clear<ARG extends Function | object>(arg: ARG): void {
     this.set(arg, []);
   }

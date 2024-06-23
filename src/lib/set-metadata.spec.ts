@@ -28,6 +28,7 @@ describe('(Unit) SetMetadata', () => {
 
     it('should be usable in list of disposable methods', () => {
       // Arrange
+      // eslint-disable-next-line @typescript-eslint/ban-types
       const disposableMethods = new SetMetadata<Function>('disposableMethods');
       function Disposable(target: any, propertyKey: string) {
         disposableMethods.add(target.constructor, target[propertyKey]);
@@ -55,6 +56,7 @@ describe('(Unit) SetMetadata', () => {
 
     it('should be usable in list of disposable methods with inheritance', () => {
       // Arrange
+      // eslint-disable-next-line @typescript-eslint/ban-types
       const disposableMethods = new SetMetadata<Function>('disposableMethods');
       function Disposable(target: any, propertyKey: string) {
         disposableMethods.add(target.constructor, target[propertyKey]);

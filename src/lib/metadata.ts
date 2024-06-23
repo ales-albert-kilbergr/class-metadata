@@ -45,6 +45,7 @@ export class Metadata<V> {
    * @returns Metadata value or `undefined` if no metadata is set.
    *
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public get<TFunction extends Function>(ctor: TFunction): V | undefined;
   /**
    * Get the metadata value from a class or an instance.
@@ -53,6 +54,7 @@ export class Metadata<V> {
    *  look for the metadata on the class itself or any parent class.
    * @returns Metadata value or `undefined` if no metadata is set.
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public get<ARG extends Function | object>(arg: ARG): V | undefined {
     if (arg instanceof Function) {
       return Reflect.get(arg, this.metadataKey) as V | undefined;
@@ -75,6 +77,7 @@ export class Metadata<V> {
    *  itself.
    * @param value - Metadata value to store.
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public set<TFunction extends Function, V>(ctor: TFunction, value: V): void;
   /**
    * Set the metadata value on a class or an instance.
@@ -83,6 +86,7 @@ export class Metadata<V> {
    *   be stored on the class itself or the instance's constructor.
    * @param value - Metadata value to store.
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public set<ARG extends Function | object, V>(arg: ARG, value: V): void {
     if (arg instanceof Function) {
       Reflect.set(arg, this.metadataKey, value);
@@ -105,6 +109,7 @@ export class Metadata<V> {
    *  on the class itself or any parent class.
    * @returns `true` if the metadata is set, `false` otherwise.
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public has<TFunction extends Function>(ctor: TFunction): boolean;
   /**
    * Check if the metadata is set on a class or an instance.
@@ -113,6 +118,7 @@ export class Metadata<V> {
    *  will look for the metadata on the class itself or any parent class.
    * @returns `true` if the metadata is set, `false` otherwise.
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public has<ARG extends Function | object>(arg: ARG): boolean {
     if (arg instanceof Function) {
       return Reflect.has(arg, this.metadataKey);
@@ -135,6 +141,7 @@ export class Metadata<V> {
    *   on the class itself or any parent class.
    * @returns `true` if the metadata was deleted, `false` otherwise.
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public delete<TFunction extends Function>(ctor: TFunction): boolean;
   /**
    * Delete the metadata from a class or an instance.
@@ -143,6 +150,7 @@ export class Metadata<V> {
    *  will look for the metadata on the class itself or any parent class.
    * @returns `true` if the metadata was deleted, `false` otherwise.
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public delete<ARG extends Function | object>(arg: ARG): boolean {
     if (arg instanceof Function) {
       if (!Reflect.has(arg, this.metadataKey)) {

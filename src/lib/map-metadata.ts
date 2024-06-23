@@ -38,7 +38,9 @@ export class MapMetadata<K, V> {
    *  safe to store values in it.
    */
   public init<TInstance extends object>(instance: TInstance): Map<K, V>;
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public init<TFunction extends Function>(ctor: TFunction): Map<K, V>;
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public init<ARG extends Function | object>(arg: ARG): Map<K, V> {
     const ctor = arg instanceof Function ? arg : arg.constructor;
     const metadata = new Map();
@@ -82,6 +84,7 @@ export class MapMetadata<K, V> {
    * @returns Metadata map. The map will be persisted on the class and it is
    *  safe to store values in it.
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public getMap<TFunction extends Function>(ctor: TFunction): Map<K, V>;
   /**
    * Get the metadata map from a class or an instance. If the metadata map
@@ -94,6 +97,7 @@ export class MapMetadata<K, V> {
    * @returns Metadata map. The map will be persisted on the class and it is
    *  safe to store values in it.
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public getMap<ARG extends Function | object>(arg: ARG): Map<K, V> {
     const ctor = arg instanceof Function ? arg : arg.constructor;
     // Check if the metadata is already defined on the parent class.
@@ -136,6 +140,7 @@ export class MapMetadata<K, V> {
    * @returns Metadata value or `undefined` if no metadata is set under given
    *  key.
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public get<TFunction extends Function>(
     ctor: TFunction,
     key: K,
@@ -153,6 +158,7 @@ export class MapMetadata<K, V> {
    * @returns Metadata value or `undefined` if no metadata is set under given
    *  key.
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public get<ARG extends Function | object>(arg: ARG, key: K): V | undefined {
     return this.getMap(arg).get(key);
   }
@@ -183,6 +189,7 @@ export class MapMetadata<K, V> {
    * @param key - Key in the metadata map.
    * @param value - Metadata value to store.
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public set<TFunction extends Function>(
     ctor: TFunction,
     key: K,
@@ -199,6 +206,7 @@ export class MapMetadata<K, V> {
    * @param key - Key in the metadata map.
    * @param value - Metadata value to store.
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public set<ARG extends Function | object>(arg: ARG, key: K, value: V): void {
     this.getMap(arg).set(key, value);
   }
@@ -223,6 +231,7 @@ export class MapMetadata<K, V> {
    *
    * @returns `true` if the key was deleted, `false` if the key was not present.
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public delete<TFunction extends Function>(ctor: TFunction, key: K): boolean;
   /**
    * Delete the metadata value from a class or an instance. The deletion will
@@ -233,6 +242,7 @@ export class MapMetadata<K, V> {
    * @param key - Key in the metadata map to delete.
    * @returns `true` if the key was deleted, `false` if the key was not present.
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public delete<ARG extends Function | object>(arg: ARG, key: K): boolean {
     return this.getMap(arg).delete(key);
   }
@@ -251,6 +261,7 @@ export class MapMetadata<K, V> {
    * @param key - Key in the metadata map.
    * @returns `true` if the metadata is set, `false` otherwise.
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public has<TFunction extends Function>(ctor: TFunction, key: K): boolean;
   /**
    * Check if the metadata under given key is set on a class or an instance.
@@ -259,6 +270,7 @@ export class MapMetadata<K, V> {
    * @param key - Key in the metadata map.
    * @returns `true` if the metadata is set, `false` otherwise.
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public has<ARG extends Function | object>(arg: ARG, key: K): boolean {
     return this.getMap(arg).has(key);
   }
@@ -275,6 +287,7 @@ export class MapMetadata<K, V> {
    *
    * @param ctor - Class constructor
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public clear<TFunction extends Function>(ctor: TFunction): void;
   /**
    * Clear the metadata map on a class or an instance. The parent metadata map
@@ -282,6 +295,7 @@ export class MapMetadata<K, V> {
    *
    * @param arg - Class constructor
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public clear<ARG extends Function | object>(arg: ARG): void {
     this.getMap(arg).clear();
   }
@@ -298,6 +312,7 @@ export class MapMetadata<K, V> {
    * @param ctor - Class constructor
    * @returns Iterable of all keys in the metadata map.
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public keys<TFunction extends Function>(ctor: TFunction): Iterable<K>;
   /**
    * Get all keys from the metadata map on a class or an instance.
@@ -305,6 +320,7 @@ export class MapMetadata<K, V> {
    * @param arg - Class constructor or an instance of a class.
    * @returns Iterable of all keys in the metadata map.
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public keys<ARG extends Function | object>(arg: ARG): Iterable<K> {
     return this.getMap(arg).keys();
   }
@@ -321,6 +337,7 @@ export class MapMetadata<K, V> {
    * @param ctor - Class constructor.
    * @returns Iterable of all values in the metadata map.
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public values<TFunction extends Function>(ctor: TFunction): Iterable<V>;
   /**
    * Get all values from the metadata map on a class or an instance.
@@ -328,6 +345,7 @@ export class MapMetadata<K, V> {
    * @param arg - Class constructor or an instance of a class.
    * @returns Iterable of all values in the metadata map.
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public values<ARG extends Function | object>(arg: ARG): Iterable<V> {
     return this.getMap(arg).values();
   }
@@ -346,6 +364,7 @@ export class MapMetadata<K, V> {
    * @param ctor - Class constructor
    * @returns Iterable of all entries in the metadata map.
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public entries<TFunction extends Function>(ctor: TFunction): Iterable<[K, V]>;
   /**
    * Get all entries from the metadata map on a class or an instance.
@@ -353,6 +372,7 @@ export class MapMetadata<K, V> {
    * @param arg - Class constructor or an instance of a class.
    * @returns Iterable of all entries in the metadata map.
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public entries<ARG extends Function | object>(arg: ARG): Iterable<[K, V]> {
     return this.getMap(arg).entries();
   }
@@ -369,6 +389,7 @@ export class MapMetadata<K, V> {
    * @param ctor - Class constructor
    * @returns Number of entries in the metadata map.
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public getSize<TFunction extends Function>(ctor: TFunction): number;
   /**
    * Get the size of the metadata map on a class or an instance.
@@ -376,6 +397,7 @@ export class MapMetadata<K, V> {
    * @param arg - Class constructor or an instance of a class.
    * @returns Number of entries in the metadata map.
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   public getSize<ARG extends Function | object>(arg: ARG): number {
     return this.getMap(arg).size;
   }
