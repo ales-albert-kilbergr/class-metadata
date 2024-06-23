@@ -1,12 +1,17 @@
 {
   "name": "@kilbergr/metadata",
-  "description": "Class metadata helper",
-  "version": "0.1.0-Alpha.5",
+  "description": "Metadata declaration helpers",
+  "version": "0.1.0-Alpha.6",
   "author": {
     "name": "Kilbergr",
     "email": "ales.albert@kilbergr.eu"
   },
+  "keywords": [
+    "metadata",
+    "typescript"
+  ],
   "license": "MIT",
+  "url": "https://github.com/ales-albert-kilbergr/metadata/#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ales-albert-kilbergr/metadata.git"
