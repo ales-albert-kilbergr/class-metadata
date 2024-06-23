@@ -43,18 +43,21 @@ The metadata can be used to build a class decorator. The following example
 defines a string metadata but it can be any kind of value.
 
 ```ts
-const myMetadata = new Metadata<string>('myMetadata:myKey');
+// my-decorator.ts
+const metadata = new Metadata<string>('myMetadata:myKey');
 
-function MyDecorator(value: string) {
+export function MyDecorator(value: string) {
   return function (target: Function) {
     myMetadata.define(target, value);
   };
 }
+MyDecorator.metadata = metadata;
 
+// my-class.ts
 @MyDecorator('myValue')
 class MyClass {}
 
-console.log(myMetadata.get(MyClass)); // 'myValue'
+console.log(MyDecorator.metadata.get(MyClass)); // 'myValue'
 ```
 
 ### MapMetadata
@@ -69,14 +72,18 @@ the initialization of child metadata will not be reflected in the child.) The
 a list of property decorators.
 
 ```ts
-const myMapMetadata = new MapMetadata<string, unknown>('myMapMetadata:myKey');
+// my-property.decorator.ts
+const metadata = new MapMetadata<string, unknown>('myMapMetadata:myKey');
 
-function MyPropertyDecorator(value: string) {
+export function MyPropertyDecorator(value: string) {
   return function (target: any, propertyKey: string) {
-    myMapMetadata.define(target.constructor, propertyKey, value);
+    metadata.define(target.constructor, propertyKey, value);
   };
 }
 
+MyPropertyDecorator.metadata = metadata;
+
+// my-class.ts
 class MyClass {
   @MyPropertyDecorator('myValue')
   public myProperty: string;
@@ -85,8 +92,8 @@ class MyClass {
   public myOtherProperty: string;
 }
 
-console.log(myMapMetadata.get(MyClass, 'myProperty')); // 'myValue'
-console.log(myMapMetadata.get(MyClass, 'myOtherProperty')); // 'myOtherValue'
+console.log(MyPropertyDecorator.metadata.get(MyClass, 'myProperty')); // 'myValue'
+console.log(MyPropertyDecorator.metadata.get(MyClass, 'myOtherProperty')); // 'myOtherValue'
 ```
 
 ### SetMetadata
@@ -101,12 +108,16 @@ the initialization of child metadata will not be reflected in the child.) The
 an array of some sort of handler.
 
 ```ts
-const disposableFnsMetadata = new SetMetadata<Function>('mySetMetadata:myKey');
+// my-disposable.decorator.ts
+const metadata = new SetMetadata<Function>('mySetMetadata:myKey');
 
-function Disposable(target: any, propertyKey: string) {
-  disposableFnsMetadata.add(target, target[propertyKey]);
+export function Disposable(target: any, propertyKey: string) {
+  metadata.add(target, target[propertyKey]);
 }
 
+Disposable.metadata = metadata;
+
+// my-class.ts
 class MyParentClass {
   @Disposable
   public disposeParent() {
@@ -126,7 +137,7 @@ class MyClass extends MyParentClass {
   }
 
   public dispose() {
-    disposableFnsMetadata.forEach(this, (fn) => fn());
+    Disposable.metadata.forEach(this, (fn) => fn());
   }
 }
 // Dispose all functions

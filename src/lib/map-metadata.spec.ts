@@ -33,17 +33,22 @@ describe('(Unit) MapMetadata', () => {
       const myMetadata = new MapMetadata<string | symbol, unknown>(
         'test:testMetadata',
       );
-      const MyPropertyDecorator =
-        (value: string): PropertyDecorator =>
-        (target: object, propertyKey: string | symbol): void => {
+      function MyPropertyDecorator(value: string): PropertyDecorator {
+        return (target: object, propertyKey: string | symbol): void => {
           myMetadata.set(target, propertyKey, value);
         };
+      }
+      MyPropertyDecorator.metadata = myMetadata;
+
       class TestClass {
         @MyPropertyDecorator('testValue')
         public testProperty?: string;
       }
       // Act
-      const propertyMetadata = myMetadata.get(TestClass, 'testProperty');
+      const propertyMetadata = MyPropertyDecorator.metadata.get(
+        TestClass,
+        'testProperty',
+      );
       // Assert
       expect(propertyMetadata).toBe('testValue');
     });
