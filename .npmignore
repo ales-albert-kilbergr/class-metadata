@@ -5,10 +5,11 @@ src
 .gitignore
 .prettierignore
 .prettierrc
-.jest.config.js
+.eslintrc.json
 tsconfig.cjs.json
 tsconfig.esm.json
 tsconfig.json
 tscofnig.spec.json
 tsconfig.types.json
 dist/coverage
+jest.config.ts

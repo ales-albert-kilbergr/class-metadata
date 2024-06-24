@@ -1,7 +1,7 @@
 {
   "name": "@kilbergr/metadata",
   "description": "Metadata declaration helpers",
-  "version": "0.1.0-Alpha.6",
+  "version": "0.1.0-Alpha.8",
   "author": {
     "name": "Kilbergr",
     "email": "ales.albert@kilbergr.eu"
@@ -16,16 +16,9 @@
     "type": "git",
     "url": "git+https://github.com/ales-albert-kilbergr/metadata.git"
   },
-  "main": "dist/cjs/index.cjs",
-  "module": "dist/esm/index.mjs",
-  "types": "dist/index.d.ts",
-  "exports": {
-    ".": {
-      "require": "./dist/cjs/index.cjs",
-      "import": "./dist/mjs/index.mjs",
-      "types": "./dist/types/index.d.ts"
-    }
-  },
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/types/index.d.ts",
   "scripts": {
     "test": "jest",
     "format": "prettier --write .",
